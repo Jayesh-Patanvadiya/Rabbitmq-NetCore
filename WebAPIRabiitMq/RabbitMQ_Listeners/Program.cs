@@ -11,10 +11,16 @@ namespace RabbitMQ_Listeners
     {
         static void Main(string[] args)
         {
+            //Here we specify the Rabbit MQ Server. we use rabbitmq docker image and use it
             var factory = new ConnectionFactory() { HostName = "localhost" };
+            //Create the RabbitMQ connection using connection factory details as i mentioned above
+
             using (var connection = factory.CreateConnection())
+            //Here we create channel with session and model
+
             using (var channel = connection.CreateModel())
             {
+                //declare the queue after mentioning name and a few property related to that
                 channel.QueueDeclare(queue: "task_queue",
                                      durable: true,
                                      exclusive: false,
@@ -41,6 +47,8 @@ namespace RabbitMQ_Listeners
                     //       ((EventingBasicConsumer)sender).Model here
                     channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
                 };
+                //Set Event object which listen message from chanel which is sent by queue
+
                 channel.BasicConsume(queue: "task_queue",
                                      autoAck: false,
                                      consumer: consumer);
