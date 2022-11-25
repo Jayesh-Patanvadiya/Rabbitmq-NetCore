@@ -21,7 +21,7 @@ namespace WebAPIRabiitMq.Controllers
         [HttpPost]
         public void Post([FromBody] Location location)
         {
-            _rabitMQProducer.SendProductMessage(location);    
+            _rabitMQProducer.SendProductMessage(location);
         }
     }
 }

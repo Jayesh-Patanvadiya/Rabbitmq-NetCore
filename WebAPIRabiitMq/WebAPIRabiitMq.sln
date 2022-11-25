@@ -5,7 +5,9 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPIRabiitMq", "WebAPIRabiitMq\WebAPIRabiitMq.csproj", "{64A23093-E729-4291-97EF-03566528FE50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ_Queue", "RabbitMQ_Queue\RabbitMQ_Queue.csproj", "{9667064E-071E-4302-8DA9-541E48FC6EA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQ_Queue", "RabbitMQ_Queue\RabbitMQ_Queue.csproj", "{9667064E-071E-4302-8DA9-541E48FC6EA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ_Listeners", "RabbitMQ_Listeners\RabbitMQ_Listeners.csproj", "{BEEC33B5-6A6E-402C-B2F0-EE9794DA6166}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{9667064E-071E-4302-8DA9-541E48FC6EA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9667064E-071E-4302-8DA9-541E48FC6EA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9667064E-071E-4302-8DA9-541E48FC6EA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEEC33B5-6A6E-402C-B2F0-EE9794DA6166}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEEC33B5-6A6E-402C-B2F0-EE9794DA6166}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEEC33B5-6A6E-402C-B2F0-EE9794DA6166}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEEC33B5-6A6E-402C-B2F0-EE9794DA6166}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
