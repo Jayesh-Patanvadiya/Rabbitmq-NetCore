@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace RabbitMQ_Listeners
 {
-    //workers
+    //listner
     internal class Program
     {
         static void Main(string[] args)
