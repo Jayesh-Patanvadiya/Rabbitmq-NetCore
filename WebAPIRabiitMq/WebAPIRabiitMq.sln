@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQ_Publisher", "Rabbi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQ_Listeners", "RabbitMQ_Listeners\RabbitMQ_Listeners.csproj", "{BEEC33B5-6A6E-402C-B2F0-EE9794DA6166}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnePublisher", "OnePublisher\OnePublisher.csproj", "{B2AF71E0-E5BD-4FEB-9F8D-5B82DC319E0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnePublisher", "OnePublisher\OnePublisher.csproj", "{B2AF71E0-E5BD-4FEB-9F8D-5B82DC319E0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleListerner", "MultipleListerner\MultipleListerner.csproj", "{CBCAB305-2195-4837-A5E3-BE471D5A7542}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultipleListerner", "MultipleListerner\MultipleListerner.csproj", "{CBCAB305-2195-4837-A5E3-BE471D5A7542}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExistingSolution", "ExistingSolution\ExistingSolution.csproj", "{B2604A19-68A1-4CC6-B170-46CA31AE65FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{CBCAB305-2195-4837-A5E3-BE471D5A7542}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBCAB305-2195-4837-A5E3-BE471D5A7542}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBCAB305-2195-4837-A5E3-BE471D5A7542}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2604A19-68A1-4CC6-B170-46CA31AE65FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2604A19-68A1-4CC6-B170-46CA31AE65FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2604A19-68A1-4CC6-B170-46CA31AE65FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2604A19-68A1-4CC6-B170-46CA31AE65FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

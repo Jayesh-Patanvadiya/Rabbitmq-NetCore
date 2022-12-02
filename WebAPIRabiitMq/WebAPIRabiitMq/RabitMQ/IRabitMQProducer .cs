@@ -2,6 +2,8 @@
 {
     public interface IRabitMQProducer
     {
-        public void SendProductMessage<T>(T message);
+        public void SendProductMessage<T>(T message, string routingKeyName);
+
+        public void ReceiveProductMessage<T>(string routingKeyName);
     }
 }
