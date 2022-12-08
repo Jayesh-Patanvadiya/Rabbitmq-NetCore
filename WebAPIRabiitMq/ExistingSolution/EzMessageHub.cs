@@ -1,47 +1,47 @@
 using Ezx.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using MultipleListerner.ExistingProject;
+using RabitMqTestingAPI.RabitMQ;
+using Silmac.Core.Infrastructure;
 using StackExchange.Redis;
 using System;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using WebAPIRabiitMq.RabitMQ;
 
 namespace Ezx.Core.Hub
 {
     public class EzMessageHub : IEzMessageHub
     {
-        IConnectionMultiplexer _connectionMultiplexer;
-        ISubscriber _subscriber { get; set; }
+        //IConnectionMultiplexer _connectionMultiplexer;
+        //ISubscriber _subscriber { get; set; }
 
         IRabitMQProducer _rabitMQProducer;
 
         static string _serviceName = Environment.GetEnvironmentVariable("EZX_SERVICENAME");
 
-        public EzMessageHub(IConnectionMultiplexer connectionMultiplexer,IRabitMQProducer rabitMQProducer)
+        public EzMessageHub(IRabitMQProducer rabitMQProducer)
         {
-            _connectionMultiplexer = connectionMultiplexer;
-            _subscriber = _connectionMultiplexer.GetSubscriber();
+            //_connectionMultiplexer = connectionMultiplexer;
+            //_subscriber = _connectionMultiplexer.GetSubscriber();
             _rabitMQProducer = rabitMQProducer;
              Subscribe();
            
         }
-        private  void Subscribe()
+        public  void Subscribe()
         {
             if (onTripCreatedEvent != null)
             {
                 //onTripCreatedEvent.Invoke(this, msg);
-               _rabitMQProducer.ReceiveProductMessage<OnTripCreateMessage>("OnTripCreate");
+               _rabitMQProducer.ReceiveProductMessage("OnTripCreate");
             }
             if (onTripModifiedEvent != null)
             {
-                _rabitMQProducer.ReceiveProductMessage<OnTripModifiedMessage>("OnTripModified");
+                _rabitMQProducer.ReceiveProductMessage("OnTripModified");
             }
            
             if (onTripCancelledEvent != null)
             {
-                _rabitMQProducer.ReceiveProductMessage<OnTripCancelledMessage>("OnTripCancelled");
+                _rabitMQProducer.ReceiveProductMessage("OnTripCancelled");
             }
 
             //_subscriber.Subscribe(EzMessageHubMessageType.TripCreate.ToString(), async (channel, json) =>
@@ -107,13 +107,15 @@ namespace Ezx.Core.Hub
             msg.EzxTripView = tqv;
             var json = await JsonHelper.SerializeAsync<OnTripCreateMessage>(msg);
 
-            var database = _connectionMultiplexer.GetDatabase();
-            await database.PublishAsync(EzMessageHubMessageType.TripCreate.ToString(), json);
+            //var database = _connectionMultiplexer.GetDatabase();
+            //await database.PublishAsync(EzMessageHubMessageType.TripCreate.ToString(), json);
+
+           // var jsonDes = await JsonHelper.DeserializeAsync<OnTripCreateMessage>(json);
 
             // RabitMQ Implementation
-            _rabitMQProducer.SendProductMessage<OnTripCreateMessage>(json,"OnTripCreated");
-
-            return true;
+            await   _rabitMQProducer.SendProductMessage(json, "OnTripCreated");
+            var temp =  await _rabitMQProducer.ReceiveProductMessage("OnTripCreated");
+            return  true;
         }
 
         //implemented rabitMQ here
@@ -124,34 +126,36 @@ namespace Ezx.Core.Hub
             msg.UpdateFieldResult = updateFieldResults;
             var json = await JsonHelper.SerializeAsync<OnTripModifiedMessage>(msg);
 
-            var database = _connectionMultiplexer.GetDatabase();
-            await database.PublishAsync(EzMessageHubMessageType.TripModify.ToString(), json);
+            //var database = _connectionMultiplexer.GetDatabase();
+            //await database.PublishAsync(EzMessageHubMessageType.TripModify.ToString(), json);
 
 
             var driverChangeResult = updateFieldResults.ToList().Where(i => i.FieldName == FieldNameEnum.RefDriverId.ToString() && i.ResultCode == (int)ResultCodeEnum.UpdateResultOk).SingleOrDefault();
-            if (driverChangeResult != null)
-            {
-                int oldDriverId;
-                if (int.TryParse(driverChangeResult.OldValueAudit, out oldDriverId))
-                {
-                    if (oldDriverId != -1 && oldDriverId != 0)
-                    {
-                        await database.PublishAsync(_serviceName + EzMessageHubMessageType.DriverChange.ToString() + "_" + oldDriverId.ToString(), json);
-                    }
-                };
+            //if (driverChangeResult != null)
+            //{
+            //    int oldDriverId;
+            //    if (int.TryParse(driverChangeResult.OldValueAudit, out oldDriverId))
+            //    {
+            //        if (oldDriverId != -1 && oldDriverId != 0)
+            //        {
+            //            await database.PublishAsync(_serviceName + EzMessageHubMessageType.DriverChange.ToString() + "_" + oldDriverId.ToString(), json);
+            //        }
+            //    };
 
-                int newDriverId;
-                if (int.TryParse(driverChangeResult.OldValueAudit, out newDriverId))
-                {
-                    if (newDriverId != -1 && newDriverId != 0)
-                    {
-                        await database.PublishAsync(_serviceName + EzMessageHubMessageType.DriverChange.ToString() + "_" + newDriverId.ToString(), json);
-                    }
-                };
-            }
+            //    //int newDriverId;
+            //    //if (int.TryParse(driverChangeResult.OldValueAudit, out newDriverId))
+            //    //{
+            //    //    if (newDriverId != -1 && newDriverId != 0)
+            //    //    {
+            //    //        await database.PublishAsync(_serviceName + EzMessageHubMessageType.DriverChange.ToString() + "_" + newDriverId.ToString(), json);
+            //    //    }
+            //    //};
+            //}
+
+
 
             // RabitMQ Implementation
-            _rabitMQProducer.SendProductMessage<OnTripModifiedMessage>(json,"OnTripModified");
+            _rabitMQProducer.SendProductMessage(json, "OnTripModified");
 
             
 
@@ -164,11 +168,11 @@ namespace Ezx.Core.Hub
             msg.EzxTripView = tqv;
             var json = await JsonHelper.SerializeAsync<OnTripCancelledMessage>(msg);
 
-            var database = _connectionMultiplexer.GetDatabase();
-            await database.PublishAsync(EzMessageHubMessageType.TripCancel.ToString(), json);
+            //var database = _connectionMultiplexer.GetDatabase();
+            //await database.PublishAsync(EzMessageHubMessageType.TripCancel.ToString(), json);
 
             // RabitMQ Implementation
-            _rabitMQProducer.SendProductMessage<OnTripCancelledMessage>(json,"OnTripCancelled");
+            _rabitMQProducer.SendProductMessage(json, "OnTripCancelled");
             
             return true;
         }
